@@ -1,5 +1,9 @@
 # RuleInterface
 
+A ruby interface communicate with Drools
+
+[![Build Status](https://travis-ci.org/NestAway/rule-interface.svg?branch=master)](https://travis-ci.org/NestAway/rule-interface)
+
 ## Installation
 
 Add this line to your application's Gemfile:
