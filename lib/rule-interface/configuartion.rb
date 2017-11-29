@@ -10,7 +10,7 @@ module RuleInterface
 
       def kiesever_config
         unless defined? @kiesever_config && @kiesever_config.present?
-          raise Error::CommonError, "Configuration for rule engine is not yet set"
+          raise Error::CommonError, 'Configuration for rule engine is not yet set'
         end
         @kiesever_config
       end
