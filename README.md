@@ -18,7 +18,31 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```
+RuleExecutor.execute!(
+  data_hash: {
+    product: [
+      {
+        id: 12,
+        name: 'Blah'
+      },
+      {
+        id: 13,
+        name: 'Bla2'
+      }
+    ],
+    user: [
+      {
+        id: 123,
+        email: 'yoman@manyo.com'
+      }
+    ]
+  },
+  namespace: :invensense,
+  container: 'team_magic_v1.2.3',
+  package: 'com.myteam.team_magic'
+)
+```
 
 ## Development
 
