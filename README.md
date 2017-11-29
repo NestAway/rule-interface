@@ -1,5 +1,9 @@
 # RuleInterface
 
+A ruby interface communicate with Drools
+
+[![Build Status](https://travis-ci.org/NestAway/rule-interface.svg?branch=master)](https://travis-ci.org/NestAway/rule-interface)
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -18,7 +22,31 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```
+RuleExecutor.execute!(
+  data_hash: {
+    product: [
+      {
+        id: 12,
+        name: 'Blah'
+      },
+      {
+        id: 13,
+        name: 'Bla2'
+      }
+    ],
+    user: [
+      {
+        id: 123,
+        email: 'yoman@manyo.com'
+      }
+    ]
+  },
+  namespace: :invensense,
+  container: 'team_magic_v1.2.3',
+  package: 'com.myteam.team_magic'
+)
+```
 
 ## Development
 
