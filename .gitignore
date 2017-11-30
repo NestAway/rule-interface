@@ -51,3 +51,4 @@ build-iPhoneSimulator/
 .DS_Store
 .byebug_history
 .rspec_status
+.DS_Store

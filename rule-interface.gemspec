@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
 
   s.add_dependency 'activesupport', '~> 3'
-  s.add_dependency 'rest-client', '~> 2'
+  s.add_dependency 'rest-client', '~> 1'
 
   s.add_development_dependency 'webmock',' ~> 3'
   s.add_development_dependency 'byebug', '~> 9.0.0'
