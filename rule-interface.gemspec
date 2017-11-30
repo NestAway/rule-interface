@@ -5,7 +5,6 @@ require 'rule-interface/version'
 Gem::Specification.new do |s|
   s.name          = "rule-interface"
   s.version       = RuleInterface::VERSION
-  s.date          = '2017-11-27'
   s.authors       = ['Ranveer']
   s.email         = ['ranveernitk@gmail.com', 'tech_team@nestaway.com']
 
@@ -21,7 +20,7 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
 
   s.add_dependency 'activesupport', '~> 3'
-  s.add_dependency 'rest-client', '~> 2'
+  s.add_dependency 'rest-client', '~> 1'
 
   s.add_development_dependency 'webmock',' ~> 3'
   s.add_development_dependency 'byebug', '~> 9.0.0'
