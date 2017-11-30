@@ -5,7 +5,6 @@ require 'rule-interface/version'
 Gem::Specification.new do |s|
   s.name          = "rule-interface"
   s.version       = RuleInterface::VERSION
-  s.date          = '2017-11-27'
   s.authors       = ['Ranveer']
   s.email         = ['ranveernitk@gmail.com', 'tech_team@nestaway.com']
 
