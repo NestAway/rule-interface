@@ -22,8 +22,8 @@ Or install it yourself as:
 
 ## Usage
 
-```
-RuleExecutor.execute!(
+```ruby
+RuleInterface.execute!(
   data_hash: {
     product: [
       {
