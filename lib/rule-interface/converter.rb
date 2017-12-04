@@ -9,7 +9,10 @@ module RuleInterface
 
       #insert namespace object
       payload[:commands] << insert_object(
-        data_object: {name: namespace},
+        data_object: {
+          id: namespace,
+          name: namespace
+        },
         object_type: 'namespace',
         package: package,
         return_object: false
@@ -43,6 +46,8 @@ module RuleInterface
     private
 
     def insert_object(data_object:, object_type:, package:, return_object: true)
+      raise Error::CommonError, "Object must have an id attribute: #{data_object.to_json}" if data_object[:id].blank?
+
       data_object = data_object.inject({}) do |m, (k,v)|
         m[k.to_s.camelize(:lower).to_sym] = v; m
       end
