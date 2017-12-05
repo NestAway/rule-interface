@@ -20,6 +20,24 @@ Or install it yourself as:
 
     $ gem install rule-interface
 
+## Configuration
+
+ENV variable can be used to configure KIE server details
+
+`KIE_SERVER_USERNAME`, `KIE_SERVER_PASSWORD`, `KIE_SERVER_HOSTNAME`
+
+You can also configure the KIE server details programmatically
+
+```ruby
+RuleInterface::Configuration::kiesever_config = {
+  username: 'blah',
+  password: 'blah',
+  hostname: 'http://url',
+}
+```
+
+All the attribute specified in the above configuration is optional. If specified, it will overwrite ENV configuration for that attribute
+
 ## Usage
 
 ```ruby

@@ -7,6 +7,10 @@ RSpec.describe RuleInterface do
     @package = 'package'
     @container = 'container'
 
+    @namespace_obj = {
+      name: @namespace
+    }
+
     @user_id = 1
 
     @kiesever_config = {
@@ -24,10 +28,15 @@ RSpec.describe RuleInterface do
         user: [
           {
             id: @user_id,
-            name: 'blah'
+            name: 'blah',
+            something_with_underscore: 'blah'
           }
         ]
       }
+      user_obj = data_hash[:user][0].inject({}) do |m, (k,v)|
+        m[k.to_s.camelize(:lower).to_sym] = v; m
+      end
+
       stub_request(
         :post,
         "#{@kiesever_config[:hostname]}/kie-server/services/rest/server/containers/instances/#{@container}"
@@ -39,16 +48,16 @@ RSpec.describe RuleInterface do
               insert: {
                 :'return-object' => false,
                 object: {
-                  :"#{@package}.Namespace" => {:name => @namespace}
+                  :"#{@package}.Namespace" => @namespace_obj
                 }
               }
             },
             {
               insert: {
                 :'return-object' => true,
-                :'out-identifier' => "User_#{@user_id}",
+                :'out-identifier' => "User##{@user_id}",
                 object: {
-                  :"#{@package}.User" => data_hash[:user][0]
+                  :"#{@package}.User" => user_obj
                 }
               }
             }
@@ -63,7 +72,7 @@ RSpec.describe RuleInterface do
               results: [
                 {
                   value: {
-                    :"#{@package}.User" => data_hash[:user][0]
+                    :"#{@package}.User" => user_obj
                   }
                 }
               ]
@@ -84,14 +93,7 @@ RSpec.describe RuleInterface do
     end
 
     it 'should raise and error' do
-      data_hash = {
-        user: [
-          {
-            id: @user_id,
-            name: 'blah'
-          }
-        ]
-      }
+      data_hash = {}
 
       stub_request(
         :post,
@@ -104,18 +106,7 @@ RSpec.describe RuleInterface do
               insert: {
                 :'return-object' => false,
                 object: {
-                  :"#{@package}.Namespace" => {
-                    name: @namespace
-                  }
-                }
-              }
-            },
-            {
-              insert: {
-                :'return-object' => true,
-                :'out-identifier' => "User_#{@user_id}",
-                object: {
-                  :"#{@package}.User" => data_hash[:user][0]
+                  :"#{@package}.Namespace" => @namespace_obj
                 }
               }
             }
