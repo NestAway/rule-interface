@@ -9,9 +9,7 @@ module RuleInterface
 
       #insert namespace object
       payload[:commands] << insert_object(
-        data_object: {
-          name: namespace
-        },
+        data_object: {name: namespace},
         object_type: 'namespace',
         package: package,
         return_object: false
