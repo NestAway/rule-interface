@@ -2,18 +2,22 @@ module RuleInterface
   module Converter
     extend self
 
-    def hash_to_drool(data_hash:, namespace:, package:)
+    def hash_to_drool(data_hash:, namespace:, package:, session:)
       payload = {}
-      payload[:lookup] = 'session'
+      payload[:lookup] = session
       payload[:commands] = []
 
+      Thread.current[:id] = 1
+
       #insert namespace object
-      payload[:commands] << insert_object(
-        data_object: {name: namespace},
-        object_type: 'namespace',
-        package: package,
-        return_object: false
-      )
+      if namespace
+        payload[:commands] << insert_object(
+          data_object: {name: namespace},
+          object_type: 'namespace',
+          package: package,
+          return_object: false
+        )
+      end
 
       data_hash.each do |object_type, data_objects|
         data_objects.each do |data_object|
@@ -43,10 +47,6 @@ module RuleInterface
     private
 
     def insert_object(data_object:, object_type:, package:, return_object: true)
-      if return_object && data_object[:id].blank?
-        raise Error::CommonError, "Object must have an id attribute: #{data_object.to_json}"
-      end
-
       data_object = data_object.inject({}) do |m, (k,v)|
         m[k.to_s.camelize(:lower).to_sym] = v; m
       end
@@ -55,7 +55,14 @@ module RuleInterface
       insert_object = {}
       insert_object[:insert] = {}
       insert_object[:insert]['return-object'] = return_object
-      insert_object[:insert]['out-identifier'] = "#{object_type}##{data_object[:id]}" if return_object
+
+      out_identifier_id = data_object[:id]
+      unless out_identifier_id
+        out_identifier_id = "RA_#{Thread.current[:id]}"
+        Thread.current[:id] += 1
+      end
+
+      insert_object[:insert]['out-identifier'] = "#{object_type}##{out_identifier_id}" if return_object
 
       object = {}
       object_name = "#{package}.#{object_type}"
