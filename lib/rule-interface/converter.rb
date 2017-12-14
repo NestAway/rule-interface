@@ -22,6 +22,7 @@ module RuleInterface
       end
 
       data_hash.each do |object_type, data_objects|
+        data_objects = [data_objects] unless data_objects.is_a? Array
         data_objects.each do |data_object|
           payload[:commands] << insert_object(
             data_object: data_object,
