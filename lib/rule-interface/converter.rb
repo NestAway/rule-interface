@@ -2,12 +2,14 @@ module RuleInterface
   module Converter
     extend self
 
+    OUT_IDENTIFIER_ID = :rule_interface_out_identifier_id
+
     def hash_to_drool(data_hash:, namespace:, package:, session:)
       payload = {}
       payload[:lookup] = session
       payload[:commands] = []
 
-      Thread.current[:id] = 1
+      Thread.current[OUT_IDENTIFIER_ID] = 1
 
       #insert namespace object
       if namespace
@@ -57,9 +59,9 @@ module RuleInterface
       insert_object[:insert]['return-object'] = return_object
 
       out_identifier_id = data_object[:id]
-      unless out_identifier_id
-        out_identifier_id = "RA_#{Thread.current[:id]}"
-        Thread.current[:id] += 1
+      if out_identifier_id.blank?
+        out_identifier_id = "RA_#{Thread.current[OUT_IDENTIFIER_ID]}"
+        Thread.current[OUT_IDENTIFIER_ID] += 1
       end
 
       insert_object[:insert]['out-identifier'] = "#{object_type}##{out_identifier_id}" if return_object

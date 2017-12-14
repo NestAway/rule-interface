@@ -1,7 +1,7 @@
 module RuleInterface
   module RuleExecutor
-    def execute!(data_hash:, namespace: nil, container:, package:, sesson: 'sesson')
-      payload = Converter.hash_to_drool(data_hash: data_hash, namespace: namespace, package: package, sesson: sesson)
+    def execute!(data_hash:, container:, package:, namespace: nil, session: 'session')
+      payload = Converter.hash_to_drool(data_hash: data_hash, namespace: namespace, package: package, session: session)
       response = parsed_connection!(container: container, method: "post", payload: payload)
       if response[:type] && response[:type] == "SUCCESS"
         Converter.drool_to_hash(
