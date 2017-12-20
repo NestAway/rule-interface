@@ -60,10 +60,38 @@ RuleInterface.execute!(
       }
     ]
   },
-  namespace: :invensense,
   container: 'team_magic_v1.2.3',
-  package: 'com.myteam.team_magic'
+  package: 'com.myteam.test',
+  namespace: :test,
+  session: 'blah'
 )
+
+You have to create data object on drools workbench first. For above example 'product' and 'user' object with respective fields id, name and email should be there.
+
+container name also you will get from drools workbench under deployment section.For each deployment container name will be updated.
+
+```ruby
+import com.myteam.test.Product;
+import com.myteam.test.User;
+
+rule "test example" 
+salience 300
+no-loop true
+
+when
+  Namespace(type == 'test')
+  $p: product(id == '123');
+then
+  System.out.println("successfully tested");
+end
+```
+
+namespace is used to execute set of rules only. This is optional field. You have to create a namespace data object with a field 'type' on drools.
+
+you have to specify your package name which you will get from drools.
+
+session is name of your stateless session. Either you create session with default name 'session'(don't need to pass session argument) or pass it to session with you custom session name.
+
 ```
 
 ## Development
