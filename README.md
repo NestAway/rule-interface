@@ -1,8 +1,21 @@
 # RuleInterface
 
-A ruby interface to communicate with Drools
+A ruby interface to convert and communicate with Drools
 
 [![Build Status](https://travis-ci.org/NestAway/rule-interface.svg?branch=master)](https://travis-ci.org/NestAway/rule-interface)
+
+## Use case
+
+- Using [Drools](https://www.drools.org/)
+- Want a easy way to convert the data to Drools format and send
+- Stateless session
+- Agenda group implementation for stateless session (We call it namespace)
+
+## Expectation
+
+Currently this Gem is designed for stateless session.
+
+Using this you can pass a set of data (facts in Drools) and get the same data back with the modification happended (based on your rule) in Drools
 
 ## Installation
 
@@ -14,11 +27,15 @@ gem 'rule-interface'
 
 And then execute:
 
-    $ bundle
+```shell
+bundle
+```
 
 Or install it yourself as:
 
-    $ gem install rule-interface
+```shell
+gem install rule-interface
+```
 
 ## Configuration
 
@@ -53,46 +70,66 @@ RuleInterface.execute!(
         name: 'Bla2'
       }
     ],
-    user: [
-      {
-        id: 123,
-        email: 'yoman@manyo.com'
-      }
-    ]
+    user: { # Array only if multiple objects, we handle it
+      id: 123,
+      email: 'yoman@manyo.com'
+    }
   },
   container: 'team_magic_v1.2.3',
   package: 'com.myteam.test',
   namespace: :test,
   session: 'blah'
 )
+```
 
-You have to create data object on drools workbench first. For above example 'product' and 'user' object with respective fields id, name and email should be there.
+### Arguments explaind
 
-container name also you will get from drools workbench under deployment section.For each deployment container name will be updated.
+#### data_hash
+Used to send data to Drools.
 
-```ruby
-import com.myteam.test.Product;
-import com.myteam.test.User;
+**Syntax**:
+Inside root hash, define the data class name in ruby style as the key and put the value as an array of objects or a signle object
 
-rule "test example" 
-salience 300
-no-loop true
+Let's say the data class name (ruby style) you put as `line_item`, this will get converted to `{package}.LineItem`
 
+Object is a key value pair (Nested objects are not supported right now). And `id` should be an uniq identifire for the class and `id` is optional, if passed we'll return the object back
+
+#### container
+Container name of the KIE server
+
+#### package
+The package name of your JAVA models (fact class) created. And this package name will get automatically added to your data_hash models
+
+#### namespace
+> Optional argument
+
+As stateless session doesn't support agenda group feature in Drools, we build namespace as a hack for it
+
+Create a fact class in your Drools project as shown below
+
+```
+Namespace {
+  :name
+}
+```
+
+**Example rule**:
+```
+rule "rule 1"
 when
-  Namespace(type == 'test')
-  $p: product(id == '123');
+  Namespace(name == "campine_1")
+  Product(amount > 200)
 then
-  System.out.println("successfully tested");
+  // Do something here
 end
 ```
 
-namespace is used to execute set of rules only. This is optional field. You have to create a namespace data object with a field 'type' on drools.
+And you pass `campine_1` as your namesapce
 
-you have to specify your package name which you will get from drools.
+#### session
+> Optional argument
 
-session is name of your stateless session. Either you create session with default name 'session'(don't need to pass session argument) or pass it to session with you custom session name.
-
-```
+Default session name in the Gem is `session`.
 
 ## Development
 
@@ -107,5 +144,5 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[USERN
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+The gem is available as open source under the terms of the [Apache-2.0](https://opensource.org/licenses/Apache-2.0).
 

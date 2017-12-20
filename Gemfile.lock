@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rule-interface (1.0.2)
+    rule-interface (1.0.3)
       activesupport (~> 3)
       rest-client (~> 1)
 
