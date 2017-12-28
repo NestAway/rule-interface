@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 1.9.8'
   s.require_paths = ['lib']
 
-  s.add_dependency 'activesupport', '~> 3'
+  s.add_dependency 'activesupport', '~> 5'
   s.add_dependency 'rest-client', '~> 1'
 
   s.add_development_dependency 'webmock',' ~> 3'
