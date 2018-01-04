@@ -17,6 +17,10 @@ RSpec.describe RuleInterface::Configuration do
     clear_env
   end
 
+  after(:each) do
+    klass.setup
+  end
+
   def set_env
     ENV['KIE_SERVER_USERNAME'] = @config[:username]
     ENV['KIE_SERVER_PASSWORD'] = @config[:password]
