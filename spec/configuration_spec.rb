@@ -17,6 +17,10 @@ RSpec.describe RuleInterface::Configuration do
     clear_env
   end
 
+  after(:each) do
+    klass.setup
+  end
+
   def set_env
     ENV['KIE_SERVER_USERNAME'] = @config[:username]
     ENV['KIE_SERVER_PASSWORD'] = @config[:password]
@@ -27,6 +31,23 @@ RSpec.describe RuleInterface::Configuration do
     ENV['KIE_SERVER_USERNAME'] = nil
     ENV['KIE_SERVER_PASSWORD'] = nil
     ENV['KIE_SERVER_HOSTNAME'] = nil
+  end
+
+  describe 'self.setup' do
+    it 'should not call kiesever_config=' do
+      expect(klass).not_to receive(:kiesever_config=)
+      klass.setup do |config|
+        config.kiesever_config = @config
+      end
+    end
+
+    it 'should call kiesever_config= only when kiesever_config is called' do
+      expect(klass).to receive(:kiesever_config=).once.and_call_original
+      klass.setup do |config|
+        config.kiesever_config = @config
+      end
+      klass.kiesever_config
+    end
   end
 
   it 'should allow to set and set kiesever_config' do
