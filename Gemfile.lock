@@ -1,9 +1,9 @@
 PATH
   remote: .
   specs:
-    rule-interface (1.1.1)
-      activesupport (~> 5)
-      rest-client (~> 2.0.2)
+    rule-interface (1.1.2)
+      activesupport
+      rest-client
 
 GEM
   remote: https://rubygems.org/
