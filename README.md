@@ -46,11 +46,13 @@ ENV variable can be used to configure KIE server details
 You can also configure the KIE server details programmatically
 
 ```ruby
-RuleInterface::Configuration::kiesever_config = {
-  username: 'blah',
-  password: 'blah',
-  hostname: 'http://url',
-}
+RuleInterface::Configuration.setup do |config|
+  config.kiesever_config = {
+    username: 'blah',
+    password: 'blah',
+    hostname: 'http://url',
+  }
+end
 ```
 
 All the attribute specified in the above configuration is optional. If specified, it will overwrite ENV configuration for that attribute
