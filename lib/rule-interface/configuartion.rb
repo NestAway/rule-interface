@@ -3,6 +3,10 @@ module RuleInterface
 
     class << self
 
+      def setup *args, &block
+        @config_block = block
+      end
+
       # eg: {
       #     username: 'blah',
       #     password: 'blah',
@@ -15,6 +19,8 @@ module RuleInterface
 
       def kiesever_config
         return @kiesever_config if @cached
+
+        @config_block.call(self) if @config_block
 
         @kiesever_config ||= {}
 
