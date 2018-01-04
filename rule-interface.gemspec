@@ -16,11 +16,11 @@ Gem::Specification.new do |s|
   s.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
   end
-  s.required_ruby_version = '>= 1.9.8'
+  s.required_ruby_version = '>= 2.1.5'
   s.require_paths = ['lib']
 
-  s.add_dependency 'activesupport', '~> 5'
-  s.add_dependency 'rest-client', '~> 2.0.2'
+  s.add_dependency 'activesupport'
+  s.add_dependency 'rest-client'
 
   s.add_development_dependency 'webmock',' ~> 3'
   s.add_development_dependency 'byebug', '~> 9.0.0'
